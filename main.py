@@ -105,7 +105,8 @@ HANGMANPICS = [
 =========""",
 ]
 
-COMMON_NOUNS = [
+import random
+common_nouns = COMMON_NOUNS = [
     "время",
     "человек",
     "год",
@@ -202,3 +203,40 @@ COMMON_NOUNS = [
     "участие",
 ]
 
+def main():
+    answer = list(random.choice(common_nouns))
+    print(answer)
+    count = 0
+
+    playfield = []
+    for i in answer:
+        playfield.append("_")
+    while True:
+        print(f"В вашем слове {len(answer)} букв")
+        print("".join(playfield))
+        print(HANGMANPICS[count])
+
+        guess = input("Введите букву: ")
+
+        if len(guess) > 1:
+            print("Введите всего 1 букву")
+            continue
+        for i in range(len(answer)):
+            if guess == answer[i]:
+                playfield[i] = guess
+        if guess not in answer: 
+            count += 1
+        if playfield == answer:
+            print("Вы лапулички-красотулички. Вы выиграли эту потную каточку.🥵") 
+            break
+        if count == 7:
+            print("Ха-ха вас повесили😈")
+            break
+
+    question = input("Хотите ли вы продолжить игру? Да/Нет")
+    if question == "Да":
+        return main()
+    elif question == "Нет":
+        print("Спасибо за игру!😝")
+            
+main()
